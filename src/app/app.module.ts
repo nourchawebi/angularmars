@@ -30,6 +30,10 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatTableModule} from "@angular/material/table";
 import {MatCardModule} from "@angular/material/card";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { DetailsproduitsComponent } from './pages/detailsproduits/detailsproduits.component';
+import { ModifierproduitComponent } from './pages/modifierproduit/modifierproduit.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,11 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     LoginComponent,
     ModalComponent,
     AjoutproduitComponent,
-    ProduitsComponent
+    ProduitsComponent,
+    DetailsproduitsComponent,
+    ModifierproduitComponent,
+    AdminComponent,
+    UnauthorizedComponent
   ],
   imports: [
     AppRoutingModule,

@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Produit} from "../models/produits";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProduitsService {
 
-  constructor( private http: HttpClient
+  constructor( private http: HttpClient, private authService:AuthService
 
   )  { }
   private baseUrl : string ='http://localhost:8082/Produits'
   // Create a new product
   createProduit(produit: Produit , image:any ){
+    const headers=this.authService.createAuthorization()
     const formData = new FormData();
     formData.append('libelle', produit.libelle|| '');
     formData.append('description', produit.description|| '');
@@ -26,14 +28,23 @@ export class ProduitsService {
     }// Ensure proper date format
     formData.append('livraisonGratuite', produit.livraisonGratuite!= null ? produit.livraisonGratuite.toString() : '');
     formData.append('picture', image);
-    return this.http.post<Produit>(`${this.baseUrl}C`, formData);
+    return this.http.post<Produit>(`${this.baseUrl}C`, formData,{headers});
   }
   getAllProduits(){
-    return this.http.get<Produit[]>(this.baseUrl);
+    const headers=this.authService.createAuthorization()
+    return this.http.get<Produit[]>(this.baseUrl, {headers});
   }
   deleteProduit(id:number){
-    return this.http.delete<void>(`${this.baseUrl}D/${id}`)
+    const headers=this.authService.createAuthorization()
+    return this.http.delete<void>(`${this.baseUrl}D/${id}`,{headers})
   }
-
+   getProduitsById(id:number){
+     const headers=this.authService.createAuthorization()
+     return this.http.get<Produit>(`${this.baseUrl}/${id}`,{headers});
+   }
+updateProduit(id:number,produit:Produit){
+  const headers=this.authService.createAuthorization()
+    return this.http.put<Produit>(`${this.baseUrl}U/${id}`,produit,{headers}) ;
+}
 
 }

@@ -12,8 +12,7 @@
   <link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
   <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
 
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
 
   <link rel="stylesheet" href="/assets/plugins/feather/feather.css">
 
@@ -28,7 +27,7 @@
       <div class="owl-carousel login-slide owl-theme">
         <div class="welcome-login">
           <div class="login-banner">
-            <img src="/assets/img/login-img.png" class="img-fluid" alt="Logo">
+            <img src="assets/img/login-img.png" class="img-fluid" alt="Logo">
           </div>
           <div class="mentor-course text-center">
             <h2>Welcome to <br>DreamsLMS Courses.</h2>
@@ -37,7 +36,7 @@
         </div>
         <div class="welcome-login">
           <div class="login-banner">
-            <img src="/assets/img/login-img.png" class="img-fluid" alt="Logo">
+            <img src="assets/img/login-img.png" class="img-fluid" alt="Logo">
           </div>
           <div class="mentor-course text-center">
             <h2>Welcome to <br>DreamsLMS Courses.</h2>
@@ -46,7 +45,7 @@
         </div>
         <div class="welcome-login">
           <div class="login-banner">
-            <img src="/assets/img/login-img.png" class="img-fluid" alt="Logo">
+            <img src="assets/img/login-img.png" class="img-fluid" alt="Logo">
           </div>
           <div class="mentor-course text-center">
             <h2>Welcome to <br>DreamsLMS Courses.</h2>
@@ -68,34 +67,73 @@
               </div>
             </div>
             <h1>Sign into Your Account</h1>
-            <form action="instructor-dashboard.html">
+            <form [formGroup]="authForm">
+
               <div class="input-block">
-                <label class="form-control-label">Email</label>
-                <input type="email" class="form-control" placeholder="Enter your email address">
+                <mat-form-field class="custom-input-width">
+                  <mat-label>Enter Email/Identifiant</mat-label>
+                  <input type="email" matInput   formControlName="username"
+                         placeholder="Ex. pat@example.com">
+                  <mat-hint>Errors appear instantly!</mat-hint>
+
+                  <mat-error *ngIf="authForm.controls['username'].hasError('username') && !authForm.controls['username'].hasError('required')">
+                    Please enter a valid email address
+                  </mat-error>
+
+                  <mat-error *ngIf="authForm.controls['username'].hasError('required')">
+                    Email is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+
               </div>
               <div class="input-block">
-                <label class="form-control-label">Password</label>
-                <div class="pass-group">
-                  <input type="password" class="form-control pass-input" placeholder="Enter your password">
-                  <span class="feather-eye toggle-password"></span>
-                </div>
+                <mat-form-field class="custom-input-width">
+                  <mat-label>Password</mat-label>
+                  <input type="password" matInput  formControlName="password"
+                         placeholder="enter your password">
+                  <mat-hint>Errors appear instantly!</mat-hint>
+
+
+
+                  <mat-error *ngIf="authForm.controls['password'].hasError('required')">
+                    password is <strong>required</strong>
+                  </mat-error>
+
+
+
+
+
+                </mat-form-field>
+
               </div>
+              <button mat-button type="submit" (click)="authenticate()"
+                      [disabled]=" authForm.invalid">Sign in </button>
               <div class="forgot">
-                <span><a class="forgot-link" href="forgot-password.html">Forgot Password ?</a></span>
+     <span>
+       <a   class="forgot-link"    >Forgot Password ?</a>
+   </span>
               </div>
-              <div class="remember-me">
-                <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Remember me
-                  <input type="checkbox" name="radio">
-                  <span class="checkmark"></span>
-                </label>
+
+
+
+              <div class="alert alert-primary" role="alert" *ngIf="message">
+                <div class="success-message">{{ message }}</div>
               </div>
-              <div class="d-grid">
-                <button class="btn btn-primary btn-start" type="submit">Sign In</button>
+
+              <div class="alert alert-danger" role="alert" *ngIf="error">
+                <div class="error-message">{{ error }}</div>
+              </div>
+
+              <div class="google-bg text-center">
+
+                <p class="mb-0">you don't have an account? <a routerLink="/register">Sign up</a></p>
               </div>
             </form>
+
           </div>
         </div>
         <div class="google-bg text-center">
+
           <span><a href="#">Or sign in with</a></span>
           <div class="sign-google">
             <ul>
@@ -111,13 +149,15 @@
   </div>
 </div>
 
+<script data-cfasync="false" src="/assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/assets/js/jquery-3.7.1.min.js" type="f45ebdc1482cb56c8029d768-text/javascript"></script>
 
-<script src="/assets/js/jquery-3.7.1.min.js" type="d20cb0460a84c28683703d7d-text/javascript"></script>
+<script src="/assets/js/bootstrap.bundle.min.js" type="f45ebdc1482cb56c8029d768-text/javascript"></script>
 
-<script src="/assets/js/bootstrap.bundle.min.js" type="d20cb0460a84c28683703d7d-text/javascript"></script>
+<script src="/assets/plugins/select2/js/select2.min.js" type="f45ebdc1482cb56c8029d768-text/javascript"></script>
 
-<script src="/assets/js/owl.carousel.min.js" type="d20cb0460a84c28683703d7d-text/javascript"></script>
+<script src="/assets/plugins/theia-sticky-sidebar/ResizeSensor.js" type="f45ebdc1482cb56c8029d768-text/javascript"></script>
+<script src="/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js" type="f45ebdc1482cb56c8029d768-text/javascript"></script>
 
-<script src="/assets/js/script.js" type="d20cb0460a84c28683703d7d-text/javascript"></script>
-<script src="/assets/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="d20cb0460a84c28683703d7d-|49" defer></script></body>
+<script src="/assets/js/script.js" type="f45ebdc1482cb56c8029d768-text/javascript"></script>
+<script src="/assets/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="f45ebdc1482cb56c8029d768-|49" defer></script></body>
 </html>

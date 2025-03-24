@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ProduitsService} from "../../services/produits.service";
 import Swal from "sweetalert2";
 import {PageEvent} from "@angular/material/paginator";
+import {MatDialog} from "@angular/material/dialog";
+import {ModifierproduitComponent} from "../modifierproduit/modifierproduit.component";
 
 @Component({
   selector: 'app-produits',
@@ -9,7 +11,7 @@ import {PageEvent} from "@angular/material/paginator";
   styleUrls: ['./produits.component.css']
 })
 export class ProduitsComponent  implements OnInit{
-  constructor(private productService:ProduitsService) {
+  constructor(private productService:ProduitsService, public dialog:MatDialog) {
   }
   message:string='';
   public produits:any=[];
@@ -74,4 +76,37 @@ filterproducts(){
   }
   this.paginateReclamations();
 }
+searchKeyword: string= '';
+searchProduits(){
+  if (this.searchKeyword){
+    this.filterdproduits=this.produits.filter((produit:any)=>
+    produit.libelle.toLowerCase().includes(this.searchKeyword.toLowerCase())||
+      produit.marque.toLowerCase().includes(this.searchKeyword.toLowerCase()));
+  }else {
+    this.filterdproduits=this.produits;
+  }
+  this.paginateReclamations();
+}
+selectedproduit:any;
+openDialog(produit: any){
+  this.selectedproduit=produit;
+  const dialogRef =this.dialog.open(
+    ModifierproduitComponent, {
+      width:'auto',
+      data:{produit:produit}
+    }
+  );
+  dialogRef.componentInstance.update.subscribe((updateproduit:any)=>{
+    const index=this.produits.findIndex((item:any)=>item.idProduit===updateproduit.idProduit);
+    if(index!== -1){
+      this.produits[index].libelle=updateproduit.libelle;
+      this.produits[index].description=updateproduit.description;
+      this.produits[index].marque= updateproduit.marque;
+      this.filterdproduits=this.produits;
+
+    }
+  })
+  this.paginateReclamations();
+}
+
 }
