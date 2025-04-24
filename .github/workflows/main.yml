@@ -2,7 +2,7 @@ name: build and push docker image to docker hub
 on:
   push:
     branches:
-      - seance4
+      - main
 jobs:
   push_to_dockerhub:
     name: push image to docker hub
