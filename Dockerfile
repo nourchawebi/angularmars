@@ -5,7 +5,8 @@ WORKDIR /usr/src/app
  COPY package*.json ./
  RUN npm install --legacy-peer-deps
  COPY . .
- RUN ng build --prod
+ RUN ng build --configuration=production
+
 #stage 2 : run
 FROM nginx:latest
 COPY nginx.conf /etc/nginx/conf.d/default.conf
